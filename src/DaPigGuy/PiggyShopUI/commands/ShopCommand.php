@@ -20,7 +20,10 @@ use pocketmine\player\Player;
 
 class ShopCommand extends BaseCommand
 {
-
+    public function __construct(PiggyShopUI $plugin){
+	    $this->plugin = $plugin;
+    }
+        
     public function onRun(CommandSender $sender, string $aliasUsed, array $args): void
     {
         if (!$sender instanceof Player) {
@@ -176,8 +179,8 @@ class ShopCommand extends BaseCommand
     protected function prepare(): void
     {
         $this->setPermission("piggyshopui.command.shop.use");
-        $this->registerSubCommand(new EditSubCommand("edit", "Edit shop categories"));
-        $this->registerArgument(0, new ShopCategoryEnum("category", true));
+        $this->registerSubCommand(new EditSubCommand($this->plugin, "edit", "Edit shop categories"));
+        $this->registerArgument(0, new ShopCategoryEnum($this->plugin, "category", true));
     }
 
 	/**
